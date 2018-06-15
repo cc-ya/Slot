@@ -38,25 +38,22 @@ class Slot extends CI_Controller {
         $status['name'] = $_SESSION['name'];
         $data['name']   = $status['name'];
         $status['coin'] = $this->Coin_model->getCoin($status['name']);
-        if($status['coin'] >= Coin_model::PAY) {
-            $status['coin']       = $this->Coin_model->payCoin($status);
-            $data['coin']         = $status['coin'];
-            $res_all              = $this->_rotationReel();
-            $_SESSION['reel_all'] = $res_all; //前回の結果を格納
-            $data['reel_all']     = $res_all;
-            $judge_line           = $this->_conversionArray($res_all);
-            $result               = self::_judge($judge_line);
-            $status['coin']       = $this->_correct($judge_line, $result, $status['coin']);
-            $data['coin']         = $status['coin'];
-            $data['result']       = $result; //当たり外れがBoolianで入る
-            $data['display']      = $this->_display;
-            $record               = $_SESSION['record'];
-            $record               = $this->_addRecord($record);
-            $data['record']       = $record;
-            $this->load->view('slot/index', $data);
-        }else{
-            $this->_coinLack($status);
-        }
+        if($status['coin'] >= Coin_model::PAY) $this->_coinLack();
+        $status['coin']       = $this->Coin_model->payCoin($status);
+        $data['coin']         = $status['coin'];
+        $res_all              = $this->_rotationReel();
+        $_SESSION['reel_all'] = $res_all; //前回の結果を格納
+        $data['reel_all']     = $res_all;
+        $judge_line           = $this->_conversionArray($res_all);
+        $result               = self::_judge($judge_line);
+        $status['coin']       = $this->_correct($judge_line, $result, $status['coin']);
+        $data['coin']         = $status['coin'];
+        $data['result']       = $result; //当たり外れがBoolianで入る
+        $data['display']      = $this->_display;
+        $record               = $_SESSION['record'];
+        $record               = $this->_addRecord($record);
+        $data['record']       = $record;
+        $this->load->view('slot/index', $data);
     }
 
 
@@ -140,7 +137,8 @@ class Slot extends CI_Controller {
         $data['reel_all'] = $_SESSION['reel_all'];
         $data['lack'] = TRUE;
 
-        $this->load->view('slot/coinLack',$data);
+        $this->load->view('slot/index',$data);
+        exit;
     }
 
     /* 履歴($record)の追加　*/

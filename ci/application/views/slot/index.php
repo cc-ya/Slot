@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 <div>
     <h1>スロットゲーム</h1>
+    <?php if(!empty($lack))echo 'コインが足りないよ'; ?>
     <?php echo $name. ":". $coin; ?>
     <table border=1>
     <?php foreach($reel_all as $posi_array):?>
