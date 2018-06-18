@@ -13,7 +13,7 @@ class Slot extends CI_Controller {
     const POSITION_MIDDLE = 1;
     const POSITION_LOWER  = 2;
     const RECODE_MAX      = 5;
-    
+
     public function __construct()
     {
         parent::__construct();
