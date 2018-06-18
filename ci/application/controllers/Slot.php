@@ -12,7 +12,7 @@ class Slot extends CI_Controller {
     const POSITION_UPPER  = 0;
     const POSITION_MIDDLE = 1;
     const POSITION_LOWER  = 2;
-    const RECODE_INITIAL  = 5;
+    const RECODE_MAX      = 5;
 
     public function __construct()
     {
@@ -24,7 +24,7 @@ class Slot extends CI_Controller {
     /** 最初の画面表示の部分です */
     public function index()
     {
-        $_SESSION['record'] = array_fill(0, RECODE_INITIAL, '-');
+        $_SESSION['record'] = array_fill(0, RECODE_MAX, '-');
         $status['name']     = $_SESSION['name'];
         $status['coin']     = $this->Coin_model->getCoin($status['name']);
         $data['name']       = $status['name'];
