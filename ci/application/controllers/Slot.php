@@ -24,6 +24,7 @@ class Slot extends CI_Controller {
     /** 最初の画面表示の部分です */
     public function index()
     {
+<<<<<<< HEAD
         $_SESSION['record'] = array_fill(0, self::RECODE_MAX, '-');
         $status['name']     = $_SESSION['name'];
         $status['coin']     = $this->Coin_model->getCoin($status['name']);
@@ -32,6 +33,16 @@ class Slot extends CI_Controller {
         $data['reel_all']   = $this->_reel_all;
         $_SESSION['reel_all'] = $this->_reel_all;
         $data['record']     = $_SESSION['record'];
+=======
+        $status['name']       = $_SESSION['name'];
+        $status['coin']       = $this->Coin_model->getCoin($status['name']);
+        $data['name']         = $status['name'];
+        $data['coin']         = $status['coin'];
+        $_SESSION['reel_all'] = $this->_reel_all;
+        $data['reel_all']     = $this->_reel_all;
+        $_SESSION['record_list']   = array_fill(0, self::RECODE_MAX, '**********');
+        $data['record_list']       = $_SESSION['record_list'];
+>>>>>>> 966fa3d991ff646b263ed91830bc1081d08ff6dc
         $this->load->view('slot/index', $data);
     }
 
@@ -53,8 +64,13 @@ class Slot extends CI_Controller {
             $data['coin']         = $status['coin'];
             $data['result']       = $result; //当たり外れがBoolianで入る
             $data['display']      = $this->_display;
+<<<<<<< HEAD
             $record               = $this->_addRecord($_SESSION['record']);
             $data['record']       = $record;
+=======
+            $record_list          = self::_addRecord();
+            $data['record_list']  = $record_list;
+>>>>>>> 966fa3d991ff646b263ed91830bc1081d08ff6dc
             $this->load->view('slot/index', $data);
         }else{
             $this->_coinLack($status);
@@ -145,13 +161,18 @@ class Slot extends CI_Controller {
         $this->load->view('slot/index',$data);
     }
 
-    /* 履歴($record)の追加　*/
-    private function _addRecord($record)
+    /* 履歴($record_list)の追加　*/
+    private static function _addRecord()
     {
+<<<<<<< HEAD
         array_unshift($record, $_SESSION['coin_record']);
         array_pop($record);
         $_SESSION['record'] = $record;
+=======
+        array_unshift($_SESSION['record_list'], $_SESSION['coin_record']);
+        array_pop($_SESSION['record_list']);
+>>>>>>> 966fa3d991ff646b263ed91830bc1081d08ff6dc
 
-        return $record;
+        return $_SESSION['record_list'];
     }
 }
