@@ -23,12 +23,15 @@ class Slot extends CI_Controller {
 
     /** 最初の画面表示の部分です */
     public function index()
+    {
         $_SESSION['record'] = array_fill(0, self::RECODE_MAX, '-');
         $status['name']     = $_SESSION['name'];
         $status['coin']     = $this->Coin_model->getCoin($status['name']);
         $data['name']       = $status['name'];
         $data['coin']       = $status['coin'];
         $data['reel_all']   = $this->_reel_all;
+        $_SESSION['reel_all'] = $this->_reel_all;
+        $data['record']     = $_SESSION['record'];
         $this->load->view('slot/index', $data);
     }
 
@@ -38,22 +41,24 @@ class Slot extends CI_Controller {
         $status['name'] = $_SESSION['name'];
         $data['name']   = $status['name'];
         $status['coin'] = $this->Coin_model->getCoin($status['name']);
-        if($status['coin'] >= Coin_model::PAY) $this->_coinLack();
-        $status['coin']       = $this->Coin_model->payCoin($status);
-        $data['coin']         = $status['coin'];
-        $res_all              = $this->_rotationReel();
-        $_SESSION['reel_all'] = $res_all; //前回の結果を格納
-        $data['reel_all']     = $res_all;
-        $judge_line           = $this->_conversionArray($res_all);
-        $result               = self::_judge($judge_line);
-        $status['coin']       = $this->_correct($judge_line, $result, $status['coin']);
-        $data['coin']         = $status['coin'];
-        $data['result']       = $result; //当たり外れがBoolianで入る
-        $data['display']      = $this->_display;
-        $record               = $_SESSION['record'];
-        $record               = $this->_addRecord($record);
-        $data['record']       = $record;
-        $this->load->view('slot/index', $data);
+        if($status['coin'] >= Coin_model::PAY) {
+            $status['coin']       = $this->Coin_model->payCoin($status);
+            $data['coin']         = $status['coin'];
+            $res_all              = $this->_rotationReel();
+            $_SESSION['reel_all'] = $res_all; //前回の結果を格納
+            $data['reel_all']     = $res_all;
+            $judge_line           = $this->_conversionArray($res_all);
+            $result               = self::_judge($judge_line);
+            $status['coin']       = $this->_correct($judge_line, $result, $status['coin']);
+            $data['coin']         = $status['coin'];
+            $data['result']       = $result; //当たり外れがBoolianで入る
+            $data['display']      = $this->_display;
+            $record               = $this->_addRecord($_SESSION['record']);
+            $data['record']       = $record;
+            $this->load->view('slot/index', $data);
+        }else{
+            $this->_coinLack($status);
+        }
     }
 
 
@@ -113,7 +118,7 @@ class Slot extends CI_Controller {
     private function _correct($judge_line, $result, $coin)
     {
         $count = FALSE;
-        $coin_record = 0;
+        $coin_record = NULL;
         end($judge_line);
         $end_key = key($judge_line);
         foreach($judge_line as $key => $value) {
@@ -132,22 +137,21 @@ class Slot extends CI_Controller {
     /* コイン不足の時　*/
     private function _coinLack($status)
     {
-        $data['name'] = $status['name'];
-        $data['coin'] = $status['coin'];
+        $data['name']     = $status['name'];
+        $data['coin']     = $status['coin'];
         $data['reel_all'] = $_SESSION['reel_all'];
-        $data['lack'] = TRUE;
+        $data['lack']     = TRUE;
 
         $this->load->view('slot/index',$data);
-        exit;
     }
 
     /* 履歴($record)の追加　*/
     private function _addRecord($record)
     {
-        array_unshift($record,$_SESSION['coin_record']);
+        array_unshift($record, $_SESSION['coin_record']);
         array_pop($record);
         $_SESSION['record'] = $record;
-        $record = $_SESSION['record'];
+        var_dump($record);
 
         return $record;
     }
