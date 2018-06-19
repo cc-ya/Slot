@@ -151,7 +151,6 @@ class Slot extends CI_Controller {
         array_unshift($record, $_SESSION['coin_record']);
         array_pop($record);
         $_SESSION['record'] = $record;
-        var_dump($record);
 
         return $record;
     }
