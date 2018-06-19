@@ -33,8 +33,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <br>
     履歴<br>
     <?php
-    if(isset($record_list)) {
-        foreach($record_list as $value) {
+    if(isset($record)) {
+        foreach($record as $value) {
             echo $value;
             echo "<br/>";
         }
