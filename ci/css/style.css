@@ -1,0 +1,24 @@
+body{
+	width: 1200px;
+}
+
+.slot{
+	background-color:#F5DA81;
+	margin:0 auto;
+}
+
+h1{
+	font-size: 25px;
+	color:#8A0829;
+}
+
+.slot p{
+	color:#8A0829;
+	text-align:center;
+}
+
+.reel_alia{
+	text-align:center;
+	margin-left: auto;
+	margin-right: auto;
+}

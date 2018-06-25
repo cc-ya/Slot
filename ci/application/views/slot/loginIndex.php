@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div>
     <h1>ログイン</h1>
     <?php if(!empty($error_message)) echo $error_message; ?>
-    <form method="post" accept-charset="utf-8" action="http://localhost/ci/index.php/Login/loginIndex/">
+    <form method="post" accept-charset="utf-8" action="http://localhost/slot/ci/index.php/Login/loginIndex/">
     <input type="text" name="name" value="" placeholder="ユーザー名を入力">
         <br>
         <input type="password" name="pass" value="" placeholder="パスワードを入力">
@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </form>
     <br>
     <h2>↓新規登録はこちら</h2>
-    <input type="button" value="新規登録" onClick="location.href='http://localhost/ci/index.php/Login/loginRegistration/'">
+    <input type="button" value="新規登録" onClick="location.href='http://localhost/slot/ci/index.php/Login/loginRegistration/'">
 </div>
 </body>
 </html>

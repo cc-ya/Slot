@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php endforeach; ?></td>
     <?php endforeach; ?>
     </table>
-    <input type="button" value="まわす！" onClick="location.href='http://localhost/ci/index.php/Slot/main/'">
+    <input type="button" value="まわす！" onClick="location.href='http://localhost/slot/ci/index.php/Slot/main/'">
     <br>
     <?php
     if(isset($result)){
@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     ?>
 </div>
-<input type="button" value="TOPへ戻る" onClick="location.href='http://localhost/ci/index.php/Login/loginIndex/'">
+<input type="button" value="TOPへ戻る" onClick="location.href='http://localhost/slot/ci/index.php/Login/loginIndex/'">
 
 </body>
 </html>

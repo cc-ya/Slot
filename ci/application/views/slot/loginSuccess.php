@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 
 <h3>登録管理ょおおう</h3>
-<input type="button" value="ログイン画面へ戻る" onClick="location.href='http://localhost/ci/index.php/Login/loginIndex/'">
+<input type="button" value="ログイン画面へ戻る" onClick="location.href='http://localhost/slot/ci/index.php/Login/loginIndex/'">
 
 </body>
 </html>

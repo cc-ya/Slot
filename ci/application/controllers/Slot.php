@@ -17,6 +17,9 @@ class Slot extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        if (ENVIRONMENT === 'development') {
+            $this->output->enable_profiler();
+        }
         $this->load->model('Coin_model');
         session_start();
     }

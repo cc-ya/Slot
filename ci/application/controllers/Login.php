@@ -26,11 +26,11 @@ class Login extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE && !empty($data['access'])) {
             $data['error_message'] = '必須項目が空です。';
-        }else if($this->form_validation->run() == TRUE){
+        }else if($this->form_validation->run() == TRUE) {
             if($this->Login_model->check($data) == TRUE) {
                 $_SESSION['name'] = $data['name'];
-                header( "Location:http://localhost/ci/index.php/Slot/index/" ) ;
-    exit ;
+                header( "Location:http://localhost/slot/ci/index.php/Slot/index/" ) ;
+                exit ;
             }else {
                 $data['error_message'] = 'パスワードかユーザー名が違います。';
             }
