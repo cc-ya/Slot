@@ -58,10 +58,11 @@ class Slot extends CI_Controller {
             $data['display']      = $this->_display;
             $record_list          = self::_addRecord();
             $data['record_list']  = $record_list;
-            $this->load->view('slot/index', $data);
+            // $this->_coinEnough($status);
         }else{
-            $this->_coinLack($status);
+            $data = $this->_coinLack($status);
         }
+        $this->load->view('slot/index', $data);
     }
 
 
@@ -137,15 +138,14 @@ class Slot extends CI_Controller {
         return $coin;
     }
 
-    /* コイン不足の時　*/
+    /* コイン不足の時 */
     private function _coinLack($status)
     {
         $data['name']     = $status['name'];
         $data['coin']     = $status['coin'];
         $data['reel_all'] = $_SESSION['reel_all'];
         $data['lack']     = TRUE;
-
-        $this->load->view('slot/index',$data);
+        return $data;
     }
 
     /* 履歴($record_list)の追加　*/
