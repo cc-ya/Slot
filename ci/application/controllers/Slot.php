@@ -45,23 +45,39 @@ class Slot extends CI_Controller {
         $data['name']   = $status['name'];
         $status['coin'] = $this->Coin_model->getCoin($status['name']);
         if($status['coin'] >= Coin_model::PAY) {
-            $status['coin']       = $this->Coin_model->payCoin($status);
-            $data['coin']         = $status['coin'];
-            $res_all              = $this->_rotationReel();
-            $_SESSION['reel_all'] = $res_all; //前回の結果を格納
-            $data['reel_all']     = $res_all;
-            $judge_line           = $this->_conversionArray($res_all);
-            $result               = self::_judge($judge_line);
-            $status['coin']       = $this->_correct($judge_line, $result, $status['coin']);
-            $data['coin']         = $status['coin'];
-            $data['result']       = $result; //当たり外れがBoolianで入る
-            $data['display']      = $this->_display;
-            $record_list          = self::_addRecord();
-            $data['record_list']  = $record_list;
-            $this->load->view('slot/index', $data);
+            $data = $this->_enoghDisplay($status);
         }else{
-            $this->_coinLack($status);
+            $data =  $this->_lackDisplay($status);
         }
+        $this->load->view('slot/index', $data);
+    }
+
+    /* コインが足りている時のviewを表示 */
+    private function _enoghDisplay($status)
+    {
+        $status['coin']       = $this->Coin_model->payCoin($status);
+        $res_all              = $this->_rotationReel();
+        $_SESSION['reel_all'] = $res_all; //前回の結果を格納
+        $judge_line           = $this->_conversionArray($res_all);
+        $result               = self::_judge($judge_line);
+        $status['coin']       = $this->_correct($judge_line, $result, $status['coin']);
+        $record_list          = self::_addRecord();
+        $data['coin']         = $status['coin'];
+        $data['result']       = $result; //当たり外れがBoolianで入る
+        $data['reel_all']     = $res_all;
+        $data['display']      = $this->_display;
+        $data['record_list']  = $record_list;
+        return $data;
+    }
+
+    /* コイン不足の時viewを表示 */
+    private function _lackDisplay($status)
+    {
+        $data['name']     = $status['name'];
+        $data['coin']     = $status['coin'];
+        $data['reel_all'] = $_SESSION['reel_all'];
+        $data['lack']     = TRUE;
+        return $data;
     }
 
 
@@ -135,17 +151,6 @@ class Slot extends CI_Controller {
             $_SESSION['coin_record'] = $coin_record;
         }
         return $coin;
-    }
-
-    /* コイン不足の時　*/
-    private function _coinLack($status)
-    {
-        $data['name']     = $status['name'];
-        $data['coin']     = $status['coin'];
-        $data['reel_all'] = $_SESSION['reel_all'];
-        $data['lack']     = TRUE;
-
-        $this->load->view('slot/index',$data);
     }
 
     /* 履歴($record_list)の追加　*/
