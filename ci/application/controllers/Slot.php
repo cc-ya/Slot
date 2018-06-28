@@ -46,7 +46,7 @@ class Slot extends CI_Controller {
         $status['coin'] = $this->Coin_model->getCoin($status['name']);
         if($status['coin'] >= Coin_model::PAY) {
             $data = $this->_enoghDisplay($status);
-        }else{
+        }else {
             $data =  $this->_lackDisplay($status);
         }
         $this->load->view('slot/index', $data);
